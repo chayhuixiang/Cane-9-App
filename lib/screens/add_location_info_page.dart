@@ -1,7 +1,11 @@
 import 'package:cane_9_app/components/label_title.dart';
 import 'package:cane_9_app/components/pageheaders.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:cane_9_app/services/firebase_image.dart';
+import 'dart:io';
 
 class AddLocationInfoPage extends StatefulWidget {
   const AddLocationInfoPage({super.key, required this.placemark});
@@ -13,6 +17,10 @@ class AddLocationInfoPage extends StatefulWidget {
 
 class _AddLocationInfoPageState extends State<AddLocationInfoPage> {
   String? _safezoneRadius;
+  final ImagePicker _picker = ImagePicker();
+  ImageProvider<Object>? _safezoneImage =
+      const AssetImage('assets/Patient_1.png');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,9 +54,8 @@ class _AddLocationInfoPageState extends State<AddLocationInfoPage> {
                           children: [
                             Container(
                               margin: const EdgeInsets.fromLTRB(0, 18, 0, 0),
-                              child: const CircleAvatar(
-                                backgroundImage:
-                                    AssetImage('assets/Patient_1.png'),
+                              child: CircleAvatar(
+                                backgroundImage: _safezoneImage,
                                 radius: 86,
                               ),
                             ),
@@ -64,12 +71,29 @@ class _AddLocationInfoPageState extends State<AddLocationInfoPage> {
                                           color: Color.fromRGBO(0, 0, 0, 0.25),
                                           spreadRadius: 4),
                                     ]),
-                                child: CircleAvatar(
-                                  radius: 17,
-                                  backgroundColor:
-                                      Theme.of(context).colorScheme.tertiary,
-                                  child: const Icon(Icons.add,
-                                      color: Colors.white),
+                                child: GestureDetector(
+                                  onTap: () async {
+                                    final XFile? selectedImage = await _picker
+                                        .pickImage(source: ImageSource.gallery);
+                                    if (selectedImage != null) {
+                                      FirebaseImage fi = FirebaseImage();
+                                      final File imageFile =
+                                          File(selectedImage.path);
+                                      await fi.uploadImage(
+                                          imageFile, 'Safezone/');
+
+                                      setState(() {
+                                        _safezoneImage = FileImage(imageFile);
+                                      });
+                                    }
+                                  },
+                                  child: CircleAvatar(
+                                    radius: 17,
+                                    backgroundColor:
+                                        Theme.of(context).colorScheme.tertiary,
+                                    child: const Icon(Icons.add,
+                                        color: Colors.white),
+                                  ),
                                 ),
                               ),
                             ),
@@ -155,10 +179,12 @@ class _AddLocationInfoPageState extends State<AddLocationInfoPage> {
                         const LabelTitle("Additional Notes"),
                         Row(
                           children: [
-                            Icon(
+                            const SizedBox(width: 3),
+                            const Icon(
                               Icons.add,
                               color: Colors.black,
-                            )
+                            ),
+                            const SizedBox(width: 4),
                           ],
                         )
                       ],
