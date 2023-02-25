@@ -2,6 +2,7 @@ import "package:firebase_storage/firebase_storage.dart";
 import 'package:flutter/material.dart';
 
 class Safezone {
+  final String? id;
   final String? name;
   final String? address;
   final String? path;
@@ -14,8 +15,15 @@ class Safezone {
 
   String url = "";
 
-  Safezone(this.name, this.address, this.path, this.postal, this.radius,
-      this.frequencies, this.details);
+  Safezone(
+      {required this.id,
+      required this.name,
+      required this.address,
+      required this.path,
+      required this.postal,
+      required this.radius,
+      required this.frequencies,
+      required this.details});
 
   Future fetchUrl() async {
     String? fetchPath = path;

@@ -22,6 +22,7 @@ class Cane9App extends StatelessWidget {
           fontFamily: 'Inter',
           colorScheme: ColorScheme.fromSwatch().copyWith(
             primary: const Color.fromRGBO(255, 129, 89, 1),
+            secondary: const Color.fromRGBO(179, 222, 193, 0.5),
             background: const Color.fromRGBO(249, 227, 220, 1),
             primaryContainer: const Color.fromRGBO(223, 41, 53, 1),
             tertiary: const Color.fromRGBO(255, 102, 53, 1),

@@ -23,7 +23,7 @@ class _RootPageState extends State<RootPage> {
   Timer? timer;
   String? lat;
   String? long;
-  bool? outOfSafeZone;
+  bool outOfSafeZone = false;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -31,8 +31,18 @@ class _RootPageState extends State<RootPage> {
     });
   }
 
+  void callAlert(bool alert) async {
+    if (alert) {
+      Networking networking = Networking(path: "/alert/enable");
+      networking.httpPost({"patientId": "iZJE99WIH4VQGzWptmDxpV3skpv1"});
+    } else {
+      Networking networking = Networking(path: "/alert/disable");
+      networking.httpPost({"patientId": "iZJE99WIH4VQGzWptmDxpV3skpv1"});
+    }
+  }
+
   void pollLocation(Networking networking) async {
-    Map<String, dynamic>? data = await networking.fetchData();
+    Map<String, dynamic>? data = await networking.httpGet();
     if (data != null) {
       setState(() {
         lat = data["lat"];
@@ -45,7 +55,8 @@ class _RootPageState extends State<RootPage> {
   @override
   void initState() {
     super.initState();
-    Networking networking = Networking(path: "/location/read");
+    Networking networking = Networking(
+        path: "/location/read?patientId=iZJE99WIH4VQGzWptmDxpV3skpv1");
     timer = Timer.periodic(const Duration(seconds: 5), (Timer t) {
       pollLocation(networking);
     });
@@ -61,7 +72,8 @@ class _RootPageState extends State<RootPage> {
   Widget build(BuildContext context) {
     final List<Widget> widgetOptions = <Widget>[
       const InfoPage(),
-      MapPage(alerted: alerted, lat: lat, long: long),
+      MapPage(
+          alerted: alerted, lat: lat, long: long, outOfSafeZone: outOfSafeZone),
       const SafezonePage(),
     ];
 
@@ -98,6 +110,7 @@ class _RootPageState extends State<RootPage> {
                     child: IconButton(
                       onPressed: () {
                         Navigator.pop(context);
+                        callAlert(!alerted);
                         setState(() {
                           alerted = !alerted;
                         });
@@ -189,10 +202,12 @@ class MapPage extends StatefulWidget {
       {super.key,
       required this.alerted,
       required this.long,
-      required this.lat});
+      required this.lat,
+      required this.outOfSafeZone});
   final bool alerted;
   final String? lat;
   final String? long;
+  final bool outOfSafeZone;
 
   @override
   State<MapPage> createState() => _MapPageState();
@@ -200,27 +215,79 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
   late GoogleMapController mapController;
-  final LatLng _center = const LatLng(1.3485136904488333, 103.68317761246088);
+  bool _warningTapped = false;
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
   }
 
-  final Set<Circle> _circles = {
-    const Circle(
-      circleId: CircleId("1"),
-      center: LatLng(1.3485136904488333, 103.68317761246088),
-      radius: 1000,
-      fillColor: Color.fromRGBO(244, 67, 54, 0.299),
-      strokeWidth: 2,
-      strokeColor: Color.fromRGBO(244, 67, 54, 1),
-    )
-  };
+  Set<Circle> circles = {};
+
+  void fetchSafezones(Networking networking) async {
+    final fetchedData = await networking.httpGet();
+    if (fetchedData != null) {
+      int index = 0;
+      final fetchedCircles = fetchedData.map<Circle>((data) {
+        index++;
+        return Circle(
+          circleId: CircleId(index.toString()),
+          center: LatLng(double.parse(data["lat"]), double.parse(data["long"])),
+          radius: data["radius"].toDouble(),
+          fillColor: const Color.fromRGBO(179, 222, 193, 0.5),
+          strokeWidth: 2,
+          strokeColor: const Color.fromRGBO(48, 58, 43, 0.5),
+        );
+      });
+      setState(() {
+        circles = {...fetchedCircles};
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    debugPrint("${widget.alerted}");
+    Networking networking = Networking(
+        path: "/safezone/read?patientId=iZJE99WIH4VQGzWptmDxpV3skpv1");
+    fetchSafezones(networking);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
+        GoogleMap(
+            onMapCreated: _onMapCreated,
+            initialCameraPosition: CameraPosition(
+              target: LatLng(
+                widget.lat == null
+                    ? 1.3485136904488333
+                    : double.parse(widget.lat!),
+                widget.lat == null
+                    ? 103.68317761246088
+                    : double.parse(widget.lat!),
+              ),
+              zoom: 14.0,
+            ),
+            myLocationButtonEnabled: false,
+            zoomGesturesEnabled: true,
+            zoomControlsEnabled: true,
+            markers: {
+              Marker(
+                markerId: const MarkerId("1"),
+                position: LatLng(
+                  widget.lat == null
+                      ? 1.3485136904488333
+                      : double.parse(widget.lat!),
+                  widget.lat == null
+                      ? 103.68317761246088
+                      : double.parse(widget.lat!),
+                ),
+              ),
+            },
+            circles: circles),
         Visibility(
           visible: widget.alerted,
           child: Positioned(
@@ -249,14 +316,74 @@ class _MapPageState extends State<MapPage> {
           right: 16,
           top: 8,
           child: FloatingActionButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              heroTag: "topBtn",
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              child: const Icon(Icons.logout)),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            heroTag: "topBtn",
+            backgroundColor: Colors.black,
+            child: const Icon(
+              Icons.logout,
+            ),
+          ),
         ),
-        const Center(child: Text("This is the map page")),
+        Visibility(
+          visible: widget.outOfSafeZone,
+          child: Positioned(
+            top: 16,
+            left: 16,
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  _warningTapped = !_warningTapped;
+                });
+              },
+              child: AnimatedContainer(
+                height: _warningTapped ? 46 : 36,
+                width: _warningTapped ? 215 : 36,
+                duration: const Duration(milliseconds: 200),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(18),
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                ),
+                child: _warningTapped
+                    ? Row(
+                        children: const [
+                          SizedBox(width: 10),
+                          Text("ALERT: ",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                              )),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Expanded(
+                            child: Text(
+                                "Winston is outside of the vicinity of Saved Places",
+                                softWrap: true,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                )),
+                          ),
+                          SizedBox(width: 4),
+                        ],
+                      )
+                    : const Icon(
+                        Icons.priority_high,
+                        color: Colors.white,
+                      ),
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          top: 0,
+          left: 150,
+          right: 150,
+          child: Image.asset("assets/CANE-9 Logo 1.png"),
+        ),
       ],
     );
   }
