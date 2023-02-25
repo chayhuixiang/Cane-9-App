@@ -20,13 +20,17 @@ class InfoPage extends StatefulWidget {
 
 class _InfoPageState extends State<InfoPage> {
   late Future<Album> futureAlbum;
-  String name = '';
+  String name = "";
+
   FirebaseImage caregiverimage =
       FirebaseImage(path: "Caregiver/Caregiver_1.png");
   FirebaseImage patientimage = FirebaseImage(path: "Patient/Patient_1.png");
 
   Future<Album> fetchAlbum() async {
-    final response = await http.get(Uri.parse('$apiurl/patient/read'));
+    String url = "$apiurl/patient/read?patientId=iZJE99WIH4VQGzWptmDxpV3skpv1";
+    debugPrint(url);
+    final response = await http.get(Uri.parse(url));
+    debugPrint("$response");
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.

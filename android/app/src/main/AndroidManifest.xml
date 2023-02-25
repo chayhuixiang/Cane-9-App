@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.cane_9_app">
-   <application
+    <!-- Required to fetch data from the internet. -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <application
         android:label="cane_9_app"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
@@ -34,6 +36,4 @@
             android:name="com.google.android.geo.API_KEY"
             android:value=""/>
     </application>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <!-- Required to fetch data from the internet. -->
 </manifest>
