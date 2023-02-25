@@ -1,6 +1,7 @@
 import 'package:cane_9_app/components/safezone_card.dart';
 import 'package:flutter/material.dart';
 import 'package:cane_9_app/services/safezone.dart';
+import 'package:http/http.dart' as http;
 
 class SafezonePage extends StatefulWidget {
   const SafezonePage({super.key});
