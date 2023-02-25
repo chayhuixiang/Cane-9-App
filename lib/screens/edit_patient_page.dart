@@ -47,7 +47,7 @@ class _EditPatientPageState extends State<EditPatientPage> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: SizedBox(
-                    height: 650,
+                    height: 600,
                     width: double.infinity,
                     child: Card(
                       shape: RoundedRectangleBorder(
@@ -57,55 +57,85 @@ class _EditPatientPageState extends State<EditPatientPage> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Row(
-                            children: [
-                              const Padding(
-                                padding: EdgeInsets.fromLTRB(18, 8, 0, 0),
-                                child: Text(
-                                  "Elderly Personal Details    ",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 12,
-                                    fontFamily: "Inter",
-                                    height: 1.25,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(0, 18, 0, 0),
+                                child: SizedBox(
+                                  width: 300,
+                                  child: Text(
+                                    "Please note that information saved here will be accessible to any passers-by who scans the QR code on the cane.",
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 5,
+                                    textAlign: TextAlign.justify,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 12,
+                                      fontFamily: "Inter",
+                                      height: 1.25,
+                                    ),
                                   ),
                                 ),
                               ),
-                              const Icon(
-                                Icons.info,
-                                size: 15,
-                              ),
-                              const Spacer(),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 8, 10, 0),
-                                child: EditButton(
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (BuildContext context) {
-                                          return const EditPatientPage();
-                                        },
-                                      ),
-                                    );
-                                  },
-                                ),
-                              )
                             ],
                           ),
-                          Container(
-                            margin: const EdgeInsets.fromLTRB(0, 18, 0, 0),
-                            child: CircleAvatar(
-                              backgroundImage: patientimage.imageurl == ""
-                                  ? const AssetImage('assets/Patient_1.png')
-                                      as ImageProvider
-                                  : NetworkImage(patientimage.imageurl),
-                              radius: 113,
-                            ),
+                          Stack(
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.fromLTRB(0, 18, 0, 0),
+                                child: CircleAvatar(
+                                  backgroundImage: patientimage.imageurl == ""
+                                      ? const AssetImage('assets/Patient_1.png')
+                                          as ImageProvider
+                                      : NetworkImage(patientimage.imageurl),
+                                  radius: 86,
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 0,
+                                right: 12,
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      boxShadow: [
+                                        BoxShadow(
+                                            blurRadius: 4,
+                                            color:
+                                                Color.fromRGBO(0, 0, 0, 0.25),
+                                            spreadRadius: 4),
+                                      ]),
+                                  child: CircleAvatar(
+                                    radius: 17,
+                                    backgroundColor:
+                                        Theme.of(context).colorScheme.tertiary,
+                                    child: const Icon(Icons.add,
+                                        color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                          const LabelInputCombined(
-                            label: "Name",
-                            boxwidthhere: 143,
-                            boxheighthere: 21,
-                            howmanylineshere: 1,
+                          Row(
+                            children: const [
+                              SizedBox(
+                                width: 250,
+                                child: LabelInputCombined(
+                                  label: "Name",
+                                  boxwidthhere: 143,
+                                  boxheighthere: 21,
+                                  howmanylineshere: 1,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 100,
+                                child: LabelInputCombined(
+                                  label: "Age",
+                                  boxwidthhere: 40,
+                                  boxheighthere: 21,
+                                  howmanylineshere: 1,
+                                ),
+                              ),
+                            ],
                           ),
                           const LabelInputCombined(
                             label: "Address",
@@ -130,6 +160,44 @@ class _EditPatientPageState extends State<EditPatientPage> {
                             boxwidthhere: 143,
                             boxheighthere: 21,
                             howmanylineshere: 1,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 9, 0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 0, 9, 0),
+                                  child: CircleAvatar(
+                                    backgroundColor:
+                                        Theme.of(context).colorScheme.primary,
+                                    child: IconButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      icon: const Icon(
+                                        Icons.done,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                CircleAvatar(
+                                  backgroundColor:
+                                      const Color.fromRGBO(112, 112, 112, 1),
+                                  child: IconButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    icon: const Icon(
+                                      Icons.close,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
