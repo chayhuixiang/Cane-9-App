@@ -5,7 +5,6 @@ class LabelInputCombinedExpanded extends StatefulWidget {
   final String hintText;
   final double height;
   final int maxLines;
-  final String value;
   final TextEditingController controller;
 
   const LabelInputCombinedExpanded({
@@ -13,7 +12,6 @@ class LabelInputCombinedExpanded extends StatefulWidget {
     required this.hintText,
     required this.height,
     required this.maxLines,
-    required this.value,
     required this.controller,
   });
 
@@ -25,32 +23,25 @@ class LabelInputCombinedExpanded extends StatefulWidget {
 class _LabelInputCombinedExpandedState
     extends State<LabelInputCombinedExpanded> {
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    widget.controller.text = widget.value;
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const LabelTitle("Name of Place"),
+        LabelTitle(widget.hintText),
         const SizedBox(height: 2),
-        SizedBox(
-          height: widget.height,
-          width: double.infinity,
+        Flexible(
           child: TextField(
-            maxLines: widget.maxLines,
+            maxLines: 2,
+            minLines: 1,
+            keyboardType: TextInputType.multiline,
             controller: widget.controller,
             textAlign: TextAlign.left,
             decoration: InputDecoration(
               border: InputBorder.none,
               // focusedBorder: InputBorder.none,
               contentPadding:
-                  const EdgeInsets.symmetric(vertical: 10.5, horizontal: 4),
-              // isDense: true,
+                  const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+              isDense: true,
               hintText: widget.hintText,
               hintStyle: const TextStyle(fontSize: 12, color: Colors.grey),
               filled: true,

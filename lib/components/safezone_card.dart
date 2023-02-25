@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cane_9_app/services/safezone.dart';
 import 'package:cane_9_app/components/edit_button.dart';
+import 'package:cane_9_app/screens/edit_location_info_page.dart';
 
 class SafezoneCard extends StatefulWidget {
   const SafezoneCard({super.key, required this.safezone});
@@ -12,7 +13,17 @@ class SafezoneCard extends StatefulWidget {
 
 class _SafezoneCardState extends State<SafezoneCard> {
   bool _expanded = false;
-  bool _animationDone = false;
+
+  late final notes = [
+    ...widget.safezone.frequencies?.map((frequency) {
+          return {"type": "frequency", "note": frequency};
+        }).toList() ??
+        [],
+    ...widget.safezone.details?.map((detail) {
+          return {"type": "detail", "note": detail};
+        }).toList() ??
+        []
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +62,8 @@ class _SafezoneCardState extends State<SafezoneCard> {
                             ),
                           ),
                           const SizedBox(height: 4),
-                          Text(widget.safezone.address ?? "",
+                          Text(
+                              "${widget.safezone.address}${widget.safezone.postal == null || widget.safezone.postal == '' ? '' : (', ${widget.safezone.postal}')}",
                               softWrap: true,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
@@ -64,18 +76,17 @@ class _SafezoneCardState extends State<SafezoneCard> {
                     const SizedBox(
                       width: 16,
                     ),
-                    EditButton(onPressed: () {}),
+                    EditButton(
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (BuildContext bctx) {
+                          return EditLocationInfoPage(sz: widget.safezone);
+                        }));
+                      },
+                    ),
                   ],
                 ),
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  onEnd: () {
-                    setState(() {
-                      _animationDone = !_animationDone;
-                    });
-                  },
-                  height: _expanded ? 41 : 24,
-                  curve: Curves.easeInOut,
+                Container(
                   child: GestureDetector(
                     onTap: () {
                       setState(() {
@@ -84,8 +95,40 @@ class _SafezoneCardState extends State<SafezoneCard> {
                     },
                     child: Column(
                       children: [
-                        _animationDone && _expanded
-                            ? const Text("CB!")
+                        _expanded
+                            ? ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount: notes.length,
+                                itemBuilder: (BuildContext bct, int index) {
+                                  Map<String, String> note = notes[index];
+                                  return Padding(
+                                    padding: EdgeInsets.only(
+                                        top: index == 0 ? 18 : 0,
+                                        bottom:
+                                            index >= notes.length - 1 ? 0 : 12),
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 10),
+                                          child: Icon(
+                                            note["type"] == "frequency"
+                                                ? Icons.schedule_outlined
+                                                : Icons.description_outlined,
+                                            color: const Color.fromRGBO(
+                                                112, 112, 112, 1),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Text(note['note'] ?? "",
+                                              softWrap: true),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              )
                             : const SizedBox.shrink(),
                         SizedBox(
                           width: double.infinity,

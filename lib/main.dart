@@ -27,11 +27,14 @@ class Cane9App extends StatelessWidget {
             tertiary: const Color.fromRGBO(255, 102, 53, 1),
           ),
           textTheme: const TextTheme(
-            titleSmall: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-            ),
-          )),
+              titleSmall: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Inter'),
+              bodySmall: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.normal,
+                  fontFamily: 'Inter'))),
       home: const LoginPage(),
     );
   }

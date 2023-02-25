@@ -13,27 +13,40 @@ class _SafezonePageState extends State<SafezonePage> {
   List<Safezone> _safezones = [];
 
   void fetchSafezone() async {
-    List<Map<String, String>> fetchedZones = [
+    List<Map<String, dynamic>> fetchedZones = [
       {
         "name": "Home",
         "image": "Safezone/Safezone_1.png",
-        "address": "623 Jurong West Street 61, Block 623, #06-019"
+        "address": "623 Jurong West Street 61, Block 623, #06-019",
+        "postal": "",
+        "radius": "500 m",
+        "frequencies": ["Often goes here on Tuesdays and Wednesdays"],
+        "details": ["Only visits the food court and supermarket"]
       },
       {
         "name": "Pioneer Shopping Mall",
         "image": "Safezone/Safezone_2.png",
-        "address": "638 Jurong West Street 61, Singapore 640638"
+        "address": "638 Jurong West Street 61",
+        "postal": "640638",
+        "radius": "1 km",
+        "frequencies": ["Often goes here on Tuesdays and Wednesdays"],
+        "details": ["Only visits the food court and supermarket"]
       },
       {
         "name": "Pier Medical Centre",
         "image": "Safezone/Safezone_3.png",
-        "address": "725 Jurong West Ave 5, Singapore 640725"
+        "address": "725 Jurong West Ave 5",
+        "postal": "640725",
+        "radius": "2 km",
+        "frequencies": ["Often goes here on Tuesdays and Wednesdays"],
+        "details": ["Only visits the food court and supermarket"]
       },
     ];
 
     List<Safezone> fetchedZonesWithImage =
         await Future.wait(fetchedZones.map((zone) async {
-      Safezone sz = Safezone(zone["name"], zone["address"], zone["image"]);
+      Safezone sz = Safezone(zone["name"], zone["address"], zone["image"],
+          zone["postal"], zone["radius"], zone["frequencies"], zone["details"]);
       await sz.fetchUrl();
       return sz;
     }));
