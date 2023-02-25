@@ -7,11 +7,11 @@ class Album {
   final String createdAt;
   final String updatedAt;
   final String name;
-  final double age;
+  final int age;
   final String address;
   final String image;
-  final List<String> languages;
-  final List<String> hobbies;
+  final List<dynamic> languages;
+  final List<dynamic> hobbies;
   final String postalCode;
   final String caretakerId;
 
