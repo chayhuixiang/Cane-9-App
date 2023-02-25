@@ -1,3 +1,4 @@
+import 'package:cane_9_app/components/label_title.dart';
 import 'package:cane_9_app/components/pageheaders.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
@@ -11,6 +12,7 @@ class AddLocationInfoPage extends StatefulWidget {
 }
 
 class _AddLocationInfoPageState extends State<AddLocationInfoPage> {
+  String? _safezoneRadius;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,6 +75,92 @@ class _AddLocationInfoPageState extends State<AddLocationInfoPage> {
                             ),
                           ],
                         ),
+                        const LabelTitle("Set Safe Zone Radius"),
+                        const SizedBox(height: 5),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Radio<String?>(
+                                      value: "500 m",
+                                      activeColor:
+                                          Theme.of(context).colorScheme.primary,
+                                      groupValue: _safezoneRadius,
+                                      materialTapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
+                                      visualDensity: const VisualDensity(
+                                        horizontal:
+                                            VisualDensity.minimumDensity,
+                                        vertical: VisualDensity.minimumDensity,
+                                      ),
+                                      onChanged: (String? value) {
+                                        setState(() => _safezoneRadius = value);
+                                      }),
+                                  const Text("500 m"),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Radio<String?>(
+                                      value: "1 km",
+                                      activeColor:
+                                          Theme.of(context).colorScheme.primary,
+                                      groupValue: _safezoneRadius,
+                                      materialTapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
+                                      visualDensity: const VisualDensity(
+                                        horizontal:
+                                            VisualDensity.minimumDensity,
+                                        vertical: VisualDensity.minimumDensity,
+                                      ),
+                                      onChanged: (String? value) {
+                                        setState(() => _safezoneRadius = value);
+                                      }),
+                                  const Text("1 km"),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Radio<String?>(
+                                      value: "2 km",
+                                      activeColor:
+                                          Theme.of(context).colorScheme.primary,
+                                      groupValue: _safezoneRadius,
+                                      materialTapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
+                                      visualDensity: const VisualDensity(
+                                        horizontal:
+                                            VisualDensity.minimumDensity,
+                                        vertical: VisualDensity.minimumDensity,
+                                      ),
+                                      onChanged: (String? value) {
+                                        setState(() => _safezoneRadius = value);
+                                      }),
+                                  const Text("2 km"),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 7),
+                        const LabelTitle("Additional Notes"),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.add,
+                              color: Colors.black,
+                            )
+                          ],
+                        )
                       ],
                     ),
                   ),
