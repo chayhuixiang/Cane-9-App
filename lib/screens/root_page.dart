@@ -45,9 +45,9 @@ class _RootPageState extends State<RootPage> {
   @override
   void initState() {
     super.initState();
-    // timer = Timer.periodic(const Duration(seconds: 5), (Timer t) {
-    //   pollLocation();
-    // });
+    timer = Timer.periodic(const Duration(seconds: 5), (Timer t) {
+      pollLocation();
+    });
   }
 
   @override
