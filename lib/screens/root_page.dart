@@ -1,8 +1,14 @@
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:cane_9_app/constants.dart';
 import 'package:cane_9_app/screens/info_page.dart';
 import 'package:cane_9_app/screens/safezone_page.dart';
+import 'package:cane_9_app/services/location.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:cane_9_app/screens/add_location_map_page.dart';
+import 'package:http/http.dart' as http;
 
 class RootPage extends StatefulWidget {
   const RootPage({super.key});
@@ -14,11 +20,40 @@ class RootPage extends StatefulWidget {
 class _RootPageState extends State<RootPage> {
   int _selectedPageIndex = 1;
   bool alerted = false;
+  Timer? timer;
+  String? lat;
+  String? long;
+  bool? outOfSafeZone;
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedPageIndex = index;
     });
+  }
+
+  void pollLocation() async {
+    String url = '$apiurl/location/read';
+
+    debugPrint("Polling $url...");
+    final response = await http.get(Uri.parse(
+        '$apiurl/location/read?patientId=iZJE99WIH4VQGzWptmDxpV3skpv1'));
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = jsonDecode(response.body);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    timer = Timer.periodic(const Duration(seconds: 5), (Timer t) {
+      pollLocation();
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    timer?.cancel();
   }
 
   @override
