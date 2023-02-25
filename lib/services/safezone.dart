@@ -1,11 +1,12 @@
 import "package:firebase_storage/firebase_storage.dart";
+import 'package:flutter/material.dart';
 
 class Safezone {
   final String? name;
   final String? address;
   final String? path;
   final String? postal;
-  final String? radius;
+  final int? radius;
   final List<String>? frequencies;
   final List<String>? details;
 
@@ -18,9 +19,13 @@ class Safezone {
 
   Future fetchUrl() async {
     String? fetchPath = path;
-    if (fetchPath != null) {
-      Reference ref = storageRef.child(fetchPath);
-      url = await ref.getDownloadURL();
+    try {
+      if (fetchPath != null) {
+        Reference ref = storageRef.child(fetchPath);
+        url = await ref.getDownloadURL();
+      }
+    } catch (e) {
+      debugPrint("$e");
     }
   }
 }

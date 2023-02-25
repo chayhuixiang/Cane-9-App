@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:cane_9_app/constants.dart';
 import 'package:cane_9_app/screens/info_page.dart';
 import 'package:cane_9_app/screens/safezone_page.dart';
-import 'package:cane_9_app/services/location.dart';
+import 'package:cane_9_app/services/networking.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:cane_9_app/screens/add_location_map_page.dart';
@@ -31,22 +31,23 @@ class _RootPageState extends State<RootPage> {
     });
   }
 
-  void pollLocation() async {
-    String url = '$apiurl/location/read';
-
-    debugPrint("Polling $url...");
-    final response = await http.get(Uri.parse(
-        '$apiurl/location/read?patientId=iZJE99WIH4VQGzWptmDxpV3skpv1'));
-    if (response.statusCode == 200) {
-      Map<String, dynamic> data = jsonDecode(response.body);
+  void pollLocation(Networking networking) async {
+    Map<String, dynamic>? data = await networking.fetchData();
+    if (data != null) {
+      setState(() {
+        lat = data["lat"];
+        long = data["long"];
+        outOfSafeZone = data["outOfSafeZone"];
+      });
     }
   }
 
   @override
   void initState() {
     super.initState();
+    Networking networking = Networking(path: "/location/read");
     timer = Timer.periodic(const Duration(seconds: 5), (Timer t) {
-      pollLocation();
+      pollLocation(networking);
     });
   }
 
@@ -60,7 +61,7 @@ class _RootPageState extends State<RootPage> {
   Widget build(BuildContext context) {
     final List<Widget> widgetOptions = <Widget>[
       const InfoPage(),
-      MapPage(alerted),
+      MapPage(alerted: alerted, lat: lat, long: long),
       const SafezonePage(),
     ];
 
@@ -184,8 +185,14 @@ class _RootPageState extends State<RootPage> {
 }
 
 class MapPage extends StatefulWidget {
-  const MapPage(this.alerted, {super.key});
+  const MapPage(
+      {super.key,
+      required this.alerted,
+      required this.long,
+      required this.lat});
   final bool alerted;
+  final String? lat;
+  final String? long;
 
   @override
   State<MapPage> createState() => _MapPageState();
@@ -249,28 +256,30 @@ class _MapPageState extends State<MapPage> {
               backgroundColor: Theme.of(context).colorScheme.primary,
               child: const Icon(Icons.logout)),
         ),
-        const Center(
-          child: Text("This is the map page."),
-        ),
+        GoogleMap(
+            onMapCreated: _onMapCreated,
+            initialCameraPosition: CameraPosition(
+              target: _center,
+              zoom: 14.0,
+            ),
+            myLocationButtonEnabled: false,
+            zoomGesturesEnabled: true,
+            zoomControlsEnabled: true,
+            markers: {
+              Marker(
+                markerId: const MarkerId("1"),
+                position: LatLng(
+                  widget.lat == null
+                      ? 1.3485136904488333
+                      : double.parse(widget.lat!),
+                  widget.lat == null
+                      ? 103.68317761246088
+                      : double.parse(widget.lat!),
+                ),
+              ),
+            },
+            circles: _circles),
       ],
     );
   }
 }
-
-// Map Widget: 
-// GoogleMap(
-//         onMapCreated: _onMapCreated,
-//         initialCameraPosition: CameraPosition(
-//           target: _center,
-//           zoom: 14.0,
-//         ),
-//         myLocationButtonEnabled: false,
-//         zoomGesturesEnabled: true,
-//         zoomControlsEnabled: true,
-//         markers: {
-//           const Marker(
-//             markerId: MarkerId("1"),
-//             position: LatLng(1.3485136904488333, 103.68317761246088),
-//           ),
-//         },
-//         circles: _circles);

@@ -31,7 +31,7 @@ class _EditLocationInfoPageState extends State<EditLocationInfoPage> {
 
   String? name;
   String? postal;
-  String? radius;
+  int? radius;
   String? address;
   String? image;
   List<Map<String, String>> notes = [];
@@ -68,12 +68,9 @@ class _EditLocationInfoPageState extends State<EditLocationInfoPage> {
       ? const AssetImage('assets/Placeholder.png') as ImageProvider
       : NetworkImage(image!);
 
-  void fetchUrl() async {}
-
   @override
   void initState() {
     super.initState();
-    fetchUrl();
   }
 
   @override
@@ -166,13 +163,6 @@ class _EditLocationInfoPageState extends State<EditLocationInfoPage> {
                           ],
                         ),
                         const SizedBox(height: 14),
-                        // LabelInputCombinedExpanded(
-                        //   value: "Hougang",
-                        //   hintText: "Name of Place",
-                        //   height: 21,
-                        //   maxLines: 1,
-                        //   controller: TextEditingController(),
-                        // ),
                         LabelInputCombinedExpanded(
                             hintText: "Name of Place",
                             height: 21,
@@ -199,8 +189,8 @@ class _EditLocationInfoPageState extends State<EditLocationInfoPage> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Radio<String?>(
-                                      value: "500 m",
+                                  Radio<int>(
+                                      value: 500,
                                       activeColor:
                                           Theme.of(context).colorScheme.primary,
                                       groupValue: radius,
@@ -211,8 +201,12 @@ class _EditLocationInfoPageState extends State<EditLocationInfoPage> {
                                             VisualDensity.minimumDensity,
                                         vertical: VisualDensity.minimumDensity,
                                       ),
-                                      onChanged: (String? value) {
-                                        setState(() => radius = value);
+                                      onChanged: (int? value) {
+                                        if (value != null) {
+                                          setState(
+                                            () => radius = value,
+                                          );
+                                        }
                                       }),
                                   const Text("500 m"),
                                 ],
@@ -222,11 +216,11 @@ class _EditLocationInfoPageState extends State<EditLocationInfoPage> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Radio<String?>(
-                                      value: "1 km",
+                                  Radio<int>(
+                                      value: 1000,
                                       activeColor:
                                           Theme.of(context).colorScheme.primary,
-                                      groupValue: radius,
+                                      groupValue: 1000,
                                       materialTapTargetSize:
                                           MaterialTapTargetSize.shrinkWrap,
                                       visualDensity: const VisualDensity(
@@ -234,8 +228,12 @@ class _EditLocationInfoPageState extends State<EditLocationInfoPage> {
                                             VisualDensity.minimumDensity,
                                         vertical: VisualDensity.minimumDensity,
                                       ),
-                                      onChanged: (String? value) {
-                                        setState(() => radius = value);
+                                      onChanged: (int? value) {
+                                        if (value != null) {
+                                          setState(
+                                            () => radius = value,
+                                          );
+                                        }
                                       }),
                                   const Text("1 km"),
                                 ],
@@ -245,8 +243,8 @@ class _EditLocationInfoPageState extends State<EditLocationInfoPage> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  Radio<String?>(
-                                      value: "2 km",
+                                  Radio<int>(
+                                      value: 2000,
                                       activeColor:
                                           Theme.of(context).colorScheme.primary,
                                       groupValue: radius,
@@ -257,8 +255,10 @@ class _EditLocationInfoPageState extends State<EditLocationInfoPage> {
                                             VisualDensity.minimumDensity,
                                         vertical: VisualDensity.minimumDensity,
                                       ),
-                                      onChanged: (String? value) {
-                                        setState(() => radius = value);
+                                      onChanged: (int? value) {
+                                        if (value != null) {
+                                          setState(() => radius = value);
+                                        }
                                       }),
                                   const Text("2 km"),
                                 ],

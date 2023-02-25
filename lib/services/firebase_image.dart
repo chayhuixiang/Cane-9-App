@@ -24,9 +24,13 @@ class FirebaseImage {
 
   Future fetchUrl() async {
     String? fetchPath = path;
-    if (fetchPath != null) {
-      Reference ref = storageRef.child(fetchPath);
-      imageurl = await ref.getDownloadURL();
+    try {
+      if (fetchPath != null) {
+        Reference ref = storageRef.child(fetchPath);
+        imageurl = await ref.getDownloadURL();
+      }
+    } catch (e) {
+      debugPrint("$e");
     }
   }
 }
