@@ -3,22 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:cane_9_app/components/combine_label_input.dart';
 import 'package:cane_9_app/services/firebase_image.dart';
 
-class EditPatientPage extends StatefulWidget {
-  const EditPatientPage({super.key});
+class EditCareGiverPage extends StatefulWidget {
+  const EditCareGiverPage({super.key});
 
   @override
-  State<EditPatientPage> createState() => _EditPatientPageState();
+  State<EditCareGiverPage> createState() => _EditCareGiverPageState();
 }
 
-class _EditPatientPageState extends State<EditPatientPage> {
+class _EditCareGiverPageState extends State<EditCareGiverPage> {
   FirebaseImage caregiverimage =
       FirebaseImage(path: "Caregiver/Caregiver_1.png");
-  FirebaseImage patientimage = FirebaseImage(path: "Patient/Patient_1.png");
 
   void fetchimage() async {
     await caregiverimage.fetchUrl();
-    await patientimage.fetchUrl();
-
     setState(() {});
   }
 
@@ -42,7 +39,7 @@ class _EditPatientPageState extends State<EditPatientPage> {
             color: const Color(0XFFF9E3DC),
             child: Column(
               children: [
-                const PageHeaders(title: "Edit Elderly Personal Details"),
+                const PageHeaders(title: "Edit Caregiver Personal Details"),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: SizedBox(
@@ -82,10 +79,11 @@ class _EditPatientPageState extends State<EditPatientPage> {
                               Container(
                                 margin: const EdgeInsets.fromLTRB(0, 18, 0, 0),
                                 child: CircleAvatar(
-                                  backgroundImage: patientimage.imageurl == ""
-                                      ? const AssetImage('assets/Patient_1.png')
+                                  backgroundImage: caregiverimage.imageurl == ""
+                                      ? const AssetImage(
+                                              'assets/Caregiver_1.png')
                                           as ImageProvider
-                                      : NetworkImage(patientimage.imageurl),
+                                      : NetworkImage(caregiverimage.imageurl),
                                   radius: 86,
                                 ),
                               ),
@@ -116,7 +114,7 @@ class _EditPatientPageState extends State<EditPatientPage> {
                           Row(
                             children: const [
                               SizedBox(
-                                width: 250,
+                                width: 180,
                                 child: LableInput(
                                   label: "Name",
                                   boxwidthhere: 143,
@@ -125,10 +123,10 @@ class _EditPatientPageState extends State<EditPatientPage> {
                                 ),
                               ),
                               SizedBox(
-                                width: 100,
+                                width: 140,
                                 child: LableInput(
-                                  label: "Age",
-                                  boxwidthhere: 40,
+                                  label: "Relationship",
+                                  boxwidthhere: 95,
                                   boxheighthere: 21,
                                   howmanylineshere: 1,
                                 ),
@@ -136,25 +134,7 @@ class _EditPatientPageState extends State<EditPatientPage> {
                             ],
                           ),
                           const LableInput(
-                            label: "Address",
-                            boxwidthhere: 231,
-                            boxheighthere: 50,
-                            howmanylineshere: 2,
-                          ),
-                          const LableInput(
-                            label: "Postal Code",
-                            boxwidthhere: 143,
-                            boxheighthere: 21,
-                            howmanylineshere: 1,
-                          ),
-                          const LableInput(
-                            label: "Languages",
-                            boxwidthhere: 143,
-                            boxheighthere: 21,
-                            howmanylineshere: 1,
-                          ),
-                          const LableInput(
-                            label: "Likes, Hobbies",
+                            label: "Contact Number",
                             boxwidthhere: 143,
                             boxheighthere: 21,
                             howmanylineshere: 1,

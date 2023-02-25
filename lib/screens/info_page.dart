@@ -1,6 +1,7 @@
 import 'package:cane_9_app/components/edit_button.dart';
 import 'package:cane_9_app/components/labels_one.dart';
 import 'package:cane_9_app/components/labels_two.dart';
+import 'package:cane_9_app/screens/edit_caregiver_page.dart';
 import 'package:cane_9_app/screens/edit_patient_page.dart';
 import 'package:flutter/material.dart';
 import 'package:cane_9_app/services/firebase_image.dart';
@@ -58,7 +59,7 @@ class _InfoPageState extends State<InfoPage> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: Container(
-                  height: 550,
+                  height: 500,
                   width: double.infinity,
                   child: Card(
                     shape: RoundedRectangleBorder(
@@ -138,7 +139,7 @@ class _InfoPageState extends State<InfoPage> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: Container(
-                  height: 420,
+                  height: 380,
                   width: double.infinity,
                   child: Card(
                     shape: RoundedRectangleBorder(
@@ -168,7 +169,15 @@ class _InfoPageState extends State<InfoPage> {
                             Padding(
                               padding: const EdgeInsets.fromLTRB(0, 8, 10, 0),
                               child: EditButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) {
+                                        return const EditCareGiverPage();
+                                      },
+                                    ),
+                                  );
+                                },
                               ),
                             )
                           ],
