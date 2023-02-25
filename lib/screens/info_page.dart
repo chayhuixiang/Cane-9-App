@@ -80,9 +80,10 @@ class _InfoPageState extends State<InfoPage> {
                                 ),
                               ),
                             ),
-                            const Icon(
+                            Icon(
                               Icons.info,
                               size: 15,
+                              color: Theme.of(context).colorScheme.primary,
                             ),
                             const Spacer(),
                             Padding(
@@ -159,10 +160,9 @@ class _InfoPageState extends State<InfoPage> {
                                 ),
                               ),
                             ),
-                            const Icon(
-                              Icons.info,
-                              size: 15,
-                            ),
+                            Icon(Icons.info,
+                                size: 15,
+                                color: Theme.of(context).colorScheme.primary),
                             const Spacer(),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(0, 8, 10, 0),

@@ -19,14 +19,18 @@ class Cane9App extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        fontFamily: 'Inter',
-        colorScheme: ColorScheme.fromSwatch().copyWith(
-          primary: const Color.fromRGBO(255, 129, 89, 1),
-          background: const Color.fromRGBO(249, 227, 220, 1),
-          primaryContainer: const Color.fromRGBO(223, 41, 53, 1),
-          tertiary: const Color.fromRGBO(255, 102, 53, 1),
-        ),
-      ),
+          fontFamily: 'Inter',
+          colorScheme: ColorScheme.fromSwatch().copyWith(
+            primary: const Color.fromRGBO(255, 129, 89, 1),
+            background: const Color.fromRGBO(249, 227, 220, 1),
+            primaryContainer: const Color.fromRGBO(223, 41, 53, 1),
+            tertiary: const Color.fromRGBO(255, 102, 53, 1),
+          ),
+          textTheme: const TextTheme(
+              titleSmall: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+          ))),
       home: const LoginPage(),
     );
   }
