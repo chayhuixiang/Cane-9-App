@@ -2,6 +2,7 @@ import 'package:cane_9_app/components/safezone_card.dart';
 import 'package:flutter/material.dart';
 import 'package:cane_9_app/services/safezone.dart';
 import 'package:http/http.dart' as http;
+import 'package:cane_9_app/services/networking.dart';
 
 class SafezonePage extends StatefulWidget {
   const SafezonePage({super.key});
@@ -13,55 +14,67 @@ class SafezonePage extends StatefulWidget {
 class _SafezonePageState extends State<SafezonePage> {
   List<Safezone> _safezones = [];
 
-  void fetchSafezone() async {
-    List<Map<String, dynamic>> fetchedZones = [
-      {
-        "name": "Home",
-        "image": "Safezone/Safezone_1.png",
-        "address": "623 Jurong West Street 61, Block 623, #06-019",
-        "postal": "",
-        "radius": "500 m",
-        "frequencies": ["Often goes here on Tuesdays and Wednesdays"],
-        "details": ["Only visits the food court and supermarket"]
-      },
-      {
-        "name": "Pioneer Shopping Mall",
-        "image": "Safezone/Safezone_2.png",
-        "address": "638 Jurong West Street 61",
-        "postal": "640638",
-        "radius": "1 km",
-        "frequencies": ["Often goes here on Tuesdays and Wednesdays"],
-        "details": ["Only visits the food court and supermarket"]
-      },
-      {
-        "name": "Pier Medical Centre",
-        "image": "Safezone/Safezone_3.png",
-        "address": "725 Jurong West Ave 5",
-        "postal": "640725",
-        "radius": "2 km",
-        "frequencies": ["Often goes here on Tuesdays and Wednesdays"],
-        "details": ["Only visits the food court and supermarket"]
-      },
-    ];
+  void fetchSafezone(Networking networking) async {
+    // List<Map<String, dynamic>> fetchedZones = [
+    //   {
+    //     "name": "Home",
+    //     "image": "Safezone/Safezone_1.png",
+    //     "address": "623 Jurong West Street 61, Block 623, #06-019",
+    //     "postal": "",
+    //     "radius": "500 m",
+    //     "frequencies": ["Often goes here on Tuesdays and Wednesdays"],
+    //     "details": ["Only visits the food court and supermarket"]
+    //   },
+    //   {
+    //     "name": "Pioneer Shopping Mall",
+    //     "image": "Safezone/Safezone_2.png",
+    //     "address": "638 Jurong West Street 61",
+    //     "postal": "640638",
+    //     "radius": "1 km",
+    //     "frequencies": ["Often goes here on Tuesdays and Wednesdays"],
+    //     "details": ["Only visits the food court and supermarket"]
+    //   },
+    //   {
+    //     "name": "Pier Medical Centre",
+    //     "image": "Safezone/Safezone_3.png",
+    //     "address": "725 Jurong West Ave 5",
+    //     "postal": "640725",
+    //     "radius": "2 km",
+    //     "frequencies": ["Often goes here on Tuesdays and Wednesdays"],
+    //     "details": ["Only visits the food court and supermarket"]
+    //   },
+    // ];
 
-    List<Safezone> fetchedZonesWithImage =
-        await Future.wait(fetchedZones.map((zone) async {
-      Safezone sz = Safezone(zone["name"], zone["address"], zone["image"],
-          zone["postal"], zone["radius"], zone["frequencies"], zone["details"]);
-      await sz.fetchUrl();
-      return sz;
-    }));
+    final fetchedZones = await networking.fetchData();
 
-    setState(() {
-      _safezones = fetchedZonesWithImage;
-    });
+    if (fetchedZones != null) {
+      debugPrint("$fetchedZones");
+      List<Safezone> fetchedZonesWithImage =
+          await Future.wait(fetchedZones.map<Future<Safezone>>((zone) async {
+        Safezone sz = Safezone(
+            zone["location"],
+            zone["address"],
+            zone["image"],
+            zone["postalCode"],
+            zone["radius"],
+            List<String>.from(zone["frequencies"]),
+            List<String>.from(zone["details"]));
+        await sz.fetchUrl();
+        return sz;
+      }));
+      setState(() {
+        _safezones = fetchedZonesWithImage;
+      });
+    }
   }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    fetchSafezone();
+    Networking networking = Networking(
+        path: "/safezone/read?patientId=iZJE99WIH4VQGzWptmDxpV3skpv1");
+    fetchSafezone(networking);
   }
 
   @override
