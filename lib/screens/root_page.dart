@@ -256,29 +256,7 @@ class _MapPageState extends State<MapPage> {
               backgroundColor: Theme.of(context).colorScheme.primary,
               child: const Icon(Icons.logout)),
         ),
-        GoogleMap(
-            onMapCreated: _onMapCreated,
-            initialCameraPosition: CameraPosition(
-              target: _center,
-              zoom: 14.0,
-            ),
-            myLocationButtonEnabled: false,
-            zoomGesturesEnabled: true,
-            zoomControlsEnabled: true,
-            markers: {
-              Marker(
-                markerId: const MarkerId("1"),
-                position: LatLng(
-                  widget.lat == null
-                      ? 1.3485136904488333
-                      : double.parse(widget.lat!),
-                  widget.lat == null
-                      ? 103.68317761246088
-                      : double.parse(widget.lat!),
-                ),
-              ),
-            },
-            circles: _circles),
+        const Center(child: Text("This is the map page")),
       ],
     );
   }
