@@ -176,7 +176,7 @@ class _InfoPageState extends State<InfoPage> {
                           margin: const EdgeInsets.fromLTRB(0, 18, 0, 0),
                           child: CircleAvatar(
                             backgroundImage: caregiverimage.imageurl == ""
-                                ? const AssetImage('assets\Caregiver_1.png')
+                                ? const AssetImage('assets/Caregiver_1.png')
                                     as ImageProvider
                                 : NetworkImage(caregiverimage.imageurl),
                             radius: 86,

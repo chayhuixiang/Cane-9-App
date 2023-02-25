@@ -1,8 +1,10 @@
-import 'package:cane_9_app/components/cardheaders.dart';
+import 'package:cane_9_app/components/label_title.dart';
+import 'package:cane_9_app/components/pageheaders.dart';
 import 'package:cane_9_app/components/inputs_one.dart';
 import 'package:flutter/material.dart';
 import 'package:cane_9_app/components/edit_button.dart';
 import 'package:cane_9_app/components/labels_two.dart';
+import 'package:cane_9_app/components/combine_label_input.dart';
 import 'package:cane_9_app/services/firebase_image.dart';
 
 class EditPatientPage extends StatefulWidget {
@@ -43,11 +45,11 @@ class _EditPatientPageState extends State<EditPatientPage> {
             color: const Color(0XFFF9E3DC),
             child: Column(
               children: [
-                const CardHeaders(title: "Edit Elderly Personal Details"),
+                const PageHeaders(title: "Edit Elderly Personal Details"),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: SizedBox(
-                    height: 1550,
+                    height: 650,
                     width: double.infinity,
                     child: Card(
                       shape: RoundedRectangleBorder(
@@ -101,12 +103,36 @@ class _EditPatientPageState extends State<EditPatientPage> {
                               radius: 113,
                             ),
                           ),
-                          const LabelsTwo(
-                              title: "Name",
-                              value: "Mr Wilson Huang",
-                              title2: "Age",
-                              value2: "74"),
-                          const InputsOne(title: "fuck", value: "you"),
+                          const LableInput(
+                            label: "Name",
+                            boxwidthhere: 143,
+                            boxheighthere: 21,
+                            howmanylineshere: 1,
+                          ),
+                          const LableInput(
+                            label: "Address",
+                            boxwidthhere: 231,
+                            boxheighthere: 50,
+                            howmanylineshere: 2,
+                          ),
+                          const LableInput(
+                            label: "Postal Code",
+                            boxwidthhere: 143,
+                            boxheighthere: 21,
+                            howmanylineshere: 1,
+                          ),
+                          const LableInput(
+                            label: "Languages",
+                            boxwidthhere: 143,
+                            boxheighthere: 21,
+                            howmanylineshere: 1,
+                          ),
+                          const LableInput(
+                            label: "Likes, Hobbies",
+                            boxwidthhere: 143,
+                            boxheighthere: 21,
+                            howmanylineshere: 1,
+                          ),
                         ],
                       ),
                     ),

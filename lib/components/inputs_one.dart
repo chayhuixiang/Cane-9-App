@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 
 class InputsOne extends StatelessWidget {
-  final String title;
   final String value;
-  const InputsOne({super.key, required this.title, required this.value});
+  final double boxwidth;
+  final int? howmanylines;
+  final double boxheight;
+  const InputsOne(
+      {super.key,
+      required this.value,
+      required this.boxwidth,
+      required this.boxheight,
+      required this.howmanylines});
 
   @override
   Widget build(
@@ -15,33 +22,25 @@ class InputsOne extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(
-              height: 21,
-              width: 143,
+            SizedBox(
+              height: boxheight,
+              width: boxwidth,
               child: TextField(
+                maxLines: howmanylines,
                 textAlign: TextAlign.left,
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   // focusedBorder: InputBorder.none,
-                  // contentPadding: EdgeInsets.fromLTRB(4, 0, 0, 0),
-                  hintText: 'Name',
-                  hintStyle: TextStyle(fontSize: 12, color: Colors.grey),
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 10.5, horizontal: 4),
+                  // isDense: true,
+                  hintText: value,
+                  hintStyle: const TextStyle(fontSize: 12, color: Colors.grey),
                   filled: true,
                   fillColor: Color(0XFFD9D9D9),
                 ),
-                // style: TextStyle(
-                //   fontWeight: FontWeight.w400,
-                //   fontSize: 12,
-                //   fontFamily: "Inter",
-                // ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-              child: Text(
-                value,
                 style: const TextStyle(
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w400,
                   fontSize: 12,
                   fontFamily: "Inter",
                 ),
