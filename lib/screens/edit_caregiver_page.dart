@@ -1,6 +1,6 @@
 import 'package:cane_9_app/components/pageheaders.dart';
 import 'package:flutter/material.dart';
-import 'package:cane_9_app/components/combine_label_input.dart';
+import 'package:cane_9_app/components/label_input_combined.dart';
 import 'package:cane_9_app/services/firebase_image.dart';
 
 class EditCareGiverPage extends StatefulWidget {
@@ -115,7 +115,7 @@ class _EditCareGiverPageState extends State<EditCareGiverPage> {
                             children: const [
                               SizedBox(
                                 width: 180,
-                                child: LableInput(
+                                child: LabelInputCombined(
                                   label: "Name",
                                   boxwidthhere: 143,
                                   boxheighthere: 21,
@@ -124,7 +124,7 @@ class _EditCareGiverPageState extends State<EditCareGiverPage> {
                               ),
                               SizedBox(
                                 width: 140,
-                                child: LableInput(
+                                child: LabelInputCombined(
                                   label: "Relationship",
                                   boxwidthhere: 95,
                                   boxheighthere: 21,
@@ -133,7 +133,7 @@ class _EditCareGiverPageState extends State<EditCareGiverPage> {
                               ),
                             ],
                           ),
-                          const LableInput(
+                          const LabelInputCombined(
                             label: "Contact Number",
                             boxwidthhere: 143,
                             boxheighthere: 21,
@@ -182,6 +182,14 @@ class _EditCareGiverPageState extends State<EditCareGiverPage> {
                     ),
                   ),
                 ),
+                const SizedBox(
+                  height: 228,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: Color(0XFFF9E3DC),
+                    ),
+                  ),
+                )
               ],
             ),
           ),
