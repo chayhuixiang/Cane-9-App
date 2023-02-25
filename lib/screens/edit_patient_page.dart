@@ -103,11 +103,27 @@ class _EditPatientPageState extends State<EditPatientPage> {
                               radius: 113,
                             ),
                           ),
-                          const LableInput(
-                            label: "Name",
-                            boxwidthhere: 143,
-                            boxheighthere: 21,
-                            howmanylineshere: 1,
+                          Row(
+                            children: const [
+                              SizedBox(
+                                width: 250,
+                                child: LableInput(
+                                  label: "Name",
+                                  boxwidthhere: 143,
+                                  boxheighthere: 21,
+                                  howmanylineshere: 1,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 100,
+                                child: LableInput(
+                                  label: "Age",
+                                  boxwidthhere: 40,
+                                  boxheighthere: 21,
+                                  howmanylineshere: 1,
+                                ),
+                              ),
+                            ],
                           ),
                           const LableInput(
                             label: "Address",
