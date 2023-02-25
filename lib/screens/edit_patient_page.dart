@@ -1,8 +1,11 @@
 import 'package:cane_9_app/components/pageheaders.dart';
 import 'package:flutter/material.dart';
-import 'package:cane_9_app/components/edit_button.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 import 'package:cane_9_app/components/label_input_combined.dart';
 import 'package:cane_9_app/services/firebase_image.dart';
+import 'package:cane_9_app/constants.dart';
 
 class EditPatientPage extends StatefulWidget {
   const EditPatientPage({super.key});
@@ -15,6 +18,10 @@ class _EditPatientPageState extends State<EditPatientPage> {
   FirebaseImage caregiverimage =
       FirebaseImage(path: "Caregiver/Caregiver_1.png");
   FirebaseImage patientimage = FirebaseImage(path: "Patient/Patient_1.png");
+
+  Future<http.Response> fetchAlbum() {
+    return http.get(Uri.parse('$apiurl/patient/read'));
+  }
 
   void fetchimage() async {
     await caregiverimage.fetchUrl();
