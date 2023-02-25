@@ -24,57 +24,65 @@ class _LoginPageState extends State<LoginPage> {
               MaterialPageRoute(builder: (buildCtx) => const RootPage()));
         },
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset('assets/CANE-9 Logo 1.png'),
-          const Text(
-            "Welcome to the Cane-9 App",
-            style: TextStyle(
-              fontFamily: "Inter",
-              fontSize: 16,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 103, 0, 0),
+              child: Image.asset('assets/CANE-9 Logo 1.png'),
             ),
-          ),
-          const Text(
-            "Log In",
-            style: TextStyle(
-              fontFamily: "Inter",
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
+            const Text(
+              "Welcome to the Cane-9 App",
+              style: TextStyle(
+                fontFamily: "Inter",
+                fontSize: 16,
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              decoration: InputDecoration(
+            const Padding(
+              padding: EdgeInsets.fromLTRB(0, 26, 0, 9),
+              child: Text(
+                "Log In",
+                style: TextStyle(
+                  fontFamily: "Inter",
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(17, 0, 17, 0),
+              child: TextField(
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    filled: true,
+                    fillColor: const Color(0XFFF9E3DC),
+                    labelText: "Username",
+                    hintText: "Enter Username"),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(17, 12, 17, 0),
+              child: TextField(
+                decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20.0),
                   ),
+                  labelText: "Password",
+                  hintText: "Enter Password",
                   filled: true,
                   fillColor: const Color(0XFFF9E3DC),
-                  labelText: "Username",
-                  hintText: "Enter Username"),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-            child: TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20.0),
                 ),
-                labelText: "Password",
-                hintText: "Enter Password",
-                filled: true,
-                fillColor: const Color(0XFFF9E3DC),
+                obscureText: true,
+                enableSuggestions: false,
+                autocorrect: false,
               ),
-              obscureText: true,
-              enableSuggestions: false,
-              autocorrect: false,
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

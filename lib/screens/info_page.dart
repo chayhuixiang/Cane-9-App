@@ -21,7 +21,6 @@ class InfoPage extends StatefulWidget {
 class _InfoPageState extends State<InfoPage> {
   late Future<Album> futureAlbum;
   String name = '';
-  double age = 0;
   FirebaseImage caregiverimage =
       FirebaseImage(path: "Caregiver/Caregiver_1.png");
   FirebaseImage patientimage = FirebaseImage(path: "Patient/Patient_1.png");
@@ -152,7 +151,7 @@ class _InfoPageState extends State<InfoPage> {
                           title: "Name",
                           value: name,
                           title2: "Age",
-                          value2: age.toString(),
+                          value2: "74",
                         ),
                         const LabelsOne(
                           title: "Address",
