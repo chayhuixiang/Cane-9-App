@@ -1,6 +1,5 @@
 import 'package:cane_9_app/components/pageheaders.dart';
 import 'package:flutter/material.dart';
-import 'package:cane_9_app/components/edit_button.dart';
 import 'package:cane_9_app/components/label_input_combined.dart';
 import 'package:cane_9_app/services/firebase_image.dart';
 

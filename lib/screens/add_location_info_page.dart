@@ -1,6 +1,7 @@
 import 'package:cane_9_app/components/label_title.dart';
 import 'package:cane_9_app/components/pageheaders.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cane_9_app/services/firebase_image.dart';
@@ -23,6 +24,8 @@ class _AddLocationInfoPageState extends State<AddLocationInfoPage> {
 
   @override
   Widget build(BuildContext context) {
+    const List<String> list = <String>["One", "Two", "Three"];
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
@@ -212,15 +215,101 @@ class _AddLocationInfoPageState extends State<AddLocationInfoPage> {
                         ),
                         const SizedBox(height: 7),
                         const LabelTitle("Additional Notes"),
+                        const SizedBox(height: 2),
                         Row(
                           children: [
                             const SizedBox(width: 3),
-                            const Icon(
-                              Icons.add,
-                              color: Colors.black,
+                            SizedBox(
+                              width: 40,
+                              height: 24,
+                              child: DropdownButton(
+                                hint: null,
+                                value: list.first,
+                                items: list.map<DropdownMenuItem<String>>(
+                                    (String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Icon(Icons.add),
+                                  );
+                                }).toList(),
+                                onChanged: (value) {
+                                  debugPrint(value);
+                                },
+                                iconSize: 0,
+                              ),
                             ),
                             const SizedBox(width: 4),
+                            const Flexible(
+                              child: TextField(
+                                keyboardType: TextInputType.multiline,
+                                maxLines: null,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  // focusedBorder: InputBorder.none,
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 4, horizontal: 4),
+                                  isDense: true,
+                                  hintStyle: TextStyle(
+                                      fontSize: 12, color: Colors.grey),
+                                  filled: true,
+                                  fillColor: Color(0XFFD9D9D9),
+                                ),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 12,
+                                  fontFamily: "Inter",
+                                ),
+                              ),
+                            )
                           ],
+                        ),
+                        const SizedBox(height: 14),
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              right: 34,
+                            ),
+                            child: Stack(
+                              clipBehavior: Clip.none,
+                              children: [
+                                Positioned(
+                                  top: 0,
+                                  right: -49,
+                                  child: CircleAvatar(
+                                    backgroundColor:
+                                        Theme.of(context).colorScheme.primary,
+                                    child: IconButton(
+                                      onPressed: () {
+                                        int count = 0;
+                                        Navigator.popUntil(
+                                            context, (route) => count++ == 2);
+                                      },
+                                      icon: const Icon(
+                                        Icons.done,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                CircleAvatar(
+                                  backgroundColor:
+                                      const Color.fromRGBO(112, 112, 112, 1),
+                                  child: IconButton(
+                                    onPressed: () {
+                                      int count = 0;
+                                      Navigator.popUntil(
+                                          context, (route) => count++ == 2);
+                                    },
+                                    icon: const Icon(
+                                      Icons.close,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         )
                       ],
                     ),
