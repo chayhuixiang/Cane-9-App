@@ -27,23 +27,48 @@ class _LoginPageState extends State<LoginPage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
+        children: [
+          Image.asset('assets/CANE-9 Logo 1.png'),
+          const Text(
+            "Welcome to the Cane-9 App",
+            style: TextStyle(
+              fontFamily: "Inter",
+              fontSize: 16,
+            ),
+          ),
+          const Text(
+            "Log In",
+            style: TextStyle(
+              fontFamily: "Inter",
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
           Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             child: TextField(
               decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  filled: true,
+                  fillColor: const Color(0XFFF9E3DC),
                   labelText: "Username",
                   hintText: "Enter Username"),
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
             child: TextField(
               decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "Password",
-                  hintText: "Enter Password"),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                labelText: "Password",
+                hintText: "Enter Password",
+                filled: true,
+                fillColor: const Color(0XFFF9E3DC),
+              ),
               obscureText: true,
               enableSuggestions: false,
               autocorrect: false,

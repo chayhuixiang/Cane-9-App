@@ -1,32 +1,21 @@
 import 'package:cane_9_app/components/pageheaders.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:async';
-import 'dart:convert';
 import 'package:cane_9_app/components/label_input_combined.dart';
 import 'package:cane_9_app/services/firebase_image.dart';
-import 'package:cane_9_app/constants.dart';
 
-class EditPatientPage extends StatefulWidget {
-  const EditPatientPage({super.key});
+class EditCareGiverPage extends StatefulWidget {
+  const EditCareGiverPage({super.key});
 
   @override
-  State<EditPatientPage> createState() => _EditPatientPageState();
+  State<EditCareGiverPage> createState() => _EditCareGiverPageState();
 }
 
-class _EditPatientPageState extends State<EditPatientPage> {
+class _EditCareGiverPageState extends State<EditCareGiverPage> {
   FirebaseImage caregiverimage =
       FirebaseImage(path: "Caregiver/Caregiver_1.png");
-  FirebaseImage patientimage = FirebaseImage(path: "Patient/Patient_1.png");
-
-  Future<http.Response> fetchAlbum() {
-    return http.get(Uri.parse('$apiurl/patient/read'));
-  }
 
   void fetchimage() async {
     await caregiverimage.fetchUrl();
-    await patientimage.fetchUrl();
-
     setState(() {});
   }
 
@@ -44,13 +33,13 @@ class _EditPatientPageState extends State<EditPatientPage> {
   @override
   Widget build(BuildContext context) {
     return (Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
         child: SingleChildScrollView(
-          child: SizedBox(
+          child: Container(
+            color: const Color(0XFFF9E3DC),
             child: Column(
               children: [
-                const PageHeaders(title: "Edit Elderly Personal Details"),
+                const PageHeaders(title: "Edit Caregiver Personal Details"),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: SizedBox(
@@ -90,10 +79,11 @@ class _EditPatientPageState extends State<EditPatientPage> {
                               Container(
                                 margin: const EdgeInsets.fromLTRB(0, 18, 0, 0),
                                 child: CircleAvatar(
-                                  backgroundImage: patientimage.imageurl == ""
-                                      ? const AssetImage('assets/Patient_1.png')
+                                  backgroundImage: caregiverimage.imageurl == ""
+                                      ? const AssetImage(
+                                              'assets/Caregiver_1.png')
                                           as ImageProvider
-                                      : NetworkImage(patientimage.imageurl),
+                                      : NetworkImage(caregiverimage.imageurl),
                                   radius: 86,
                                 ),
                               ),
@@ -124,7 +114,7 @@ class _EditPatientPageState extends State<EditPatientPage> {
                           Row(
                             children: const [
                               SizedBox(
-                                width: 250,
+                                width: 180,
                                 child: LabelInputCombined(
                                   label: "Name",
                                   boxwidthhere: 143,
@@ -133,10 +123,10 @@ class _EditPatientPageState extends State<EditPatientPage> {
                                 ),
                               ),
                               SizedBox(
-                                width: 100,
+                                width: 140,
                                 child: LabelInputCombined(
-                                  label: "Age",
-                                  boxwidthhere: 40,
+                                  label: "Relationship",
+                                  boxwidthhere: 95,
                                   boxheighthere: 21,
                                   howmanylineshere: 1,
                                 ),
@@ -144,25 +134,7 @@ class _EditPatientPageState extends State<EditPatientPage> {
                             ],
                           ),
                           const LabelInputCombined(
-                            label: "Address",
-                            boxwidthhere: 231,
-                            boxheighthere: 50,
-                            howmanylineshere: 2,
-                          ),
-                          const LabelInputCombined(
-                            label: "Postal Code",
-                            boxwidthhere: 143,
-                            boxheighthere: 21,
-                            howmanylineshere: 1,
-                          ),
-                          const LabelInputCombined(
-                            label: "Languages",
-                            boxwidthhere: 143,
-                            boxheighthere: 21,
-                            howmanylineshere: 1,
-                          ),
-                          const LabelInputCombined(
-                            label: "Likes, Hobbies",
+                            label: "Contact Number",
                             boxwidthhere: 143,
                             boxheighthere: 21,
                             howmanylineshere: 1,
@@ -210,6 +182,14 @@ class _EditPatientPageState extends State<EditPatientPage> {
                     ),
                   ),
                 ),
+                const SizedBox(
+                  height: 228,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: Color(0XFFF9E3DC),
+                    ),
+                  ),
+                )
               ],
             ),
           ),
