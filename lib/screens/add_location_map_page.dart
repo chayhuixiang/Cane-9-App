@@ -1,3 +1,4 @@
+import 'package:cane_9_app/screens/add_location_info_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
@@ -70,8 +71,17 @@ class _AddLocationMapPageState extends State<AddLocationMapPage> {
         floatingActionButton: placemark == null
             ? null
             : FloatingActionButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return AddLocationInfoPage(
+                        placemark: placemark!,
+                      );
+                    },
+                  ));
+                },
                 backgroundColor: Theme.of(context).colorScheme.tertiary,
+                child: const Icon(Icons.arrow_forward),
               ));
   }
 }

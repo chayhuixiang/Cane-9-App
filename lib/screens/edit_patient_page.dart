@@ -1,4 +1,4 @@
-import 'package:cane_9_app/components/cardheaders.dart';
+import 'package:cane_9_app/components/pageheaders.dart';
 import 'package:flutter/material.dart';
 
 class EditPatientPage extends StatefulWidget {
@@ -14,7 +14,7 @@ class _EditPatientPageState extends State<EditPatientPage> {
     return (Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          child: CardHeaders(title: "Edit Elderly Personal Details"),
+          child: PageHeaders(title: "Edit Elderly Personal Details"),
         ),
       ),
     ));
