@@ -3,6 +3,7 @@ import 'package:cane_9_app/components/labels_one.dart';
 import 'package:cane_9_app/components/labels_two.dart';
 import 'package:cane_9_app/screens/edit_caregiver_page.dart';
 import 'package:cane_9_app/screens/edit_patient_page.dart';
+import 'package:cane_9_app/services/caregiverinfo.dart';
 import 'package:flutter/material.dart';
 import 'package:cane_9_app/services/firebase_image.dart';
 import 'package:http/http.dart' as http;
@@ -10,6 +11,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:cane_9_app/constants.dart';
 import 'package:cane_9_app/services/album_from_json.dart';
+import 'package:cane_9_app/services/networking.dart';
 
 class InfoPage extends StatefulWidget {
   const InfoPage({super.key});
@@ -20,6 +22,7 @@ class InfoPage extends StatefulWidget {
 
 class _InfoPageState extends State<InfoPage> {
   late Future<Album> futureAlbum;
+  CareGiverInfo? careGiverAlbum;
 
   FirebaseImage caregiverimage =
       FirebaseImage(path: "Caregiver/Caregiver_1.png");
@@ -33,7 +36,6 @@ class _InfoPageState extends State<InfoPage> {
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      debugPrint("cheebai");
       return Album.fromJson(jsonDecode(response.body));
     } else {
       // If the server did not return a 200 OK response,
@@ -42,20 +44,21 @@ class _InfoPageState extends State<InfoPage> {
     }
   }
 
-  Future fetchAlbum2() async {
-    String url = "$apiurl/patient/read?patientId=iZJE99WIH4VQGzWptmDxpV3skpv1";
-    // debugPrint(url);
-    final response = await http.get(Uri.parse(url));
-    debugPrint("$response");
-    if (response.statusCode == 200) {
-      // If the server did return a 200 OK response,
-      // then parse the JSON.
-      debugPrint("cheebai");
-      return Album.fromJson(jsonDecode(response.body));
-    } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      throw Exception('Failed to load album');
+  void fetchCareGiverInfo(Networking networking) async {
+    final caregiverinfo = await networking.fetchData();
+    if (caregiverinfo != null) {
+      debugPrint("$caregiverinfo");
+      CareGiverInfo cgi = CareGiverInfo(
+        id: caregiverinfo["id"],
+        name: caregiverinfo["name"],
+        relationship: caregiverinfo["relationship"],
+        contact: caregiverinfo["contact"],
+        path: caregiverinfo["image"],
+      );
+      await cgi.fetchUrl();
+      setState(() {
+        careGiverAlbum = cgi;
+      });
     }
   }
 
@@ -71,6 +74,9 @@ class _InfoPageState extends State<InfoPage> {
     super.initState();
     fetchimage();
     futureAlbum = fetchAlbum();
+    Networking networking = Networking(
+        path: "/caretaker/read?patientId=iZJE99WIH4VQGzWptmDxpV3skpv1");
+    fetchCareGiverInfo(networking);
   }
 
   @override
@@ -263,15 +269,21 @@ class _InfoPageState extends State<InfoPage> {
                                       radius: 86,
                                     ),
                                   ),
-                                  const LabelsTwo(
+                                  LabelsTwo(
                                     title: "Name",
-                                    value: "Ms Lynn Lee",
+                                    value: careGiverAlbum == null
+                                        ? ""
+                                        : careGiverAlbum!.name,
                                     title2: "Relationship",
-                                    value2: "Daughter",
+                                    value2: careGiverAlbum == null
+                                        ? ""
+                                        : careGiverAlbum!.relationship,
                                   ),
-                                  const LabelsOne(
+                                  LabelsOne(
                                       title: "Contact Number",
-                                      value: "91234567"),
+                                      value: careGiverAlbum == null
+                                          ? ""
+                                          : careGiverAlbum!.contact),
                                 ],
                               ),
                             ),
