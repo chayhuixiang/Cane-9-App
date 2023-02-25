@@ -33,7 +33,7 @@
         <meta-data 
             android:name="com.google.android.geo.API_KEY"
             android:value=""/>
-    <uses-permission android:name="android.permission.INTERNET"/>
     </application>
+    <uses-permission android:name="android.permission.INTERNET"/>
     <!-- Required to fetch data from the internet. -->
 </manifest>
