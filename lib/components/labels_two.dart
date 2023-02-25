@@ -29,7 +29,7 @@ class LabelsTwo extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
               child: Text(
                 value,
                 style: const TextStyle(

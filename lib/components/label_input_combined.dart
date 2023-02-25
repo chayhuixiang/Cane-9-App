@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:cane_9_app/components/inputs_one.dart';
 import 'package:cane_9_app/components/label_title.dart';
 
-class LableInput extends StatelessWidget {
+class LabelInputCombined extends StatelessWidget {
   final String label;
   final double boxwidthhere;
   final int? howmanylineshere;
   final double boxheighthere;
-  const LableInput(
+  const LabelInputCombined(
       {super.key,
       required this.label,
       required this.boxwidthhere,
@@ -17,6 +17,7 @@ class LableInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(29, 8, 0, 0),
