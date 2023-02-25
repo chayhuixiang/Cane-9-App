@@ -40,7 +40,7 @@ class _InfoPageState extends State<InfoPage> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          color: const Color(0xFFD9D9D9),
+          color: const Color(0XFFF9E3DC),
           child: Column(
             children: [
               Container(
@@ -110,7 +110,7 @@ class _InfoPageState extends State<InfoPage> {
                                 ? const AssetImage('assets/Patient_1.png')
                                     as ImageProvider
                                 : NetworkImage(patientimage.imageurl),
-                            radius: 113,
+                            radius: 86,
                           ),
                         ),
                         const LabelsTwo(
@@ -177,10 +177,10 @@ class _InfoPageState extends State<InfoPage> {
                           margin: const EdgeInsets.fromLTRB(0, 18, 0, 0),
                           child: CircleAvatar(
                             backgroundImage: caregiverimage.imageurl == ""
-                                ? const AssetImage('assets\Caregiver_1.png')
+                                ? const AssetImage('assets/Caregiver_1.png')
                                     as ImageProvider
                                 : NetworkImage(caregiverimage.imageurl),
-                            radius: 113,
+                            radius: 86,
                           ),
                         ),
                         const LabelsTwo(
