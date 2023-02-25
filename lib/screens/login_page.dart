@@ -18,6 +18,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.arrow_forward),
+        backgroundColor: Theme.of(context).colorScheme.tertiary,
         onPressed: () {
           Navigator.push(context,
               MaterialPageRoute(builder: (buildCtx) => const RootPage()));

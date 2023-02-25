@@ -13,8 +13,9 @@ class InfoPage extends StatefulWidget {
 }
 
 class _InfoPageState extends State<InfoPage> {
-  FirebaseImage caregiverimage = FirebaseImage("Caregiver/Caregiver_1.png");
-  FirebaseImage patientimage = FirebaseImage("Patient/Patient_1.png");
+  FirebaseImage caregiverimage =
+      FirebaseImage(path: "Caregiver/Caregiver_1.png");
+  FirebaseImage patientimage = FirebaseImage(path: "Patient/Patient_1.png");
 
   void fetchimage() async {
     await caregiverimage.fetchUrl();
