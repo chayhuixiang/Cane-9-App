@@ -1,10 +1,10 @@
 import 'package:cane_9_app/components/label_title.dart';
 import 'package:cane_9_app/components/pageheaders.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cane_9_app/services/firebase_image.dart';
+import 'package:cane_9_app/components/label_input_combined_expanded.dart';
 import 'dart:io';
 
 class AddLocationInfoPage extends StatefulWidget {
@@ -19,7 +19,7 @@ class _AddLocationInfoPageState extends State<AddLocationInfoPage> {
   String? _safezoneRadius;
   final ImagePicker _picker = ImagePicker();
   ImageProvider<Object>? _safezoneImage =
-      const AssetImage('assets/Patient_1.png');
+      const AssetImage('assets/Placeholder.png');
 
   @override
   Widget build(BuildContext context) {
@@ -99,8 +99,43 @@ class _AddLocationInfoPageState extends State<AddLocationInfoPage> {
                             ),
                           ],
                         ),
+                        const SizedBox(height: 14),
+                        // LabelInputCombinedExpanded(
+                        //   value: "Hougang",
+                        //   hintText: "Name of Place",
+                        //   height: 21,
+                        //   maxLines: 1,
+                        //   controller: TextEditingController(),
+                        // ),
+                        const LabelTitle("Name of Place"),
+                        const SizedBox(height: 2),
+                        Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.only(
+                                top: 3, bottom: 3, left: 3),
+                            color: const Color.fromRGBO(217, 217, 217, 1),
+                            child: Text(widget.placemark.name.toString())),
+                        const SizedBox(height: 7),
+                        const LabelTitle("Address"),
+                        const SizedBox(height: 2),
+                        Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.only(
+                                top: 3, bottom: 3, left: 3),
+                            color: const Color.fromRGBO(217, 217, 217, 1),
+                            child: Text(widget.placemark.street.toString())),
+                        const SizedBox(height: 7),
+                        const LabelTitle("Postal Code"),
+                        const SizedBox(height: 2),
+                        Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.only(
+                                top: 3, bottom: 3, left: 3),
+                            color: const Color.fromRGBO(217, 217, 217, 1),
+                            child:
+                                Text(widget.placemark.postalCode.toString())),
+                        const SizedBox(height: 7),
                         const LabelTitle("Set Safe Zone Radius"),
-                        const SizedBox(height: 5),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [

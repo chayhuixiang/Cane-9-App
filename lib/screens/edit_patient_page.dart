@@ -1,6 +1,7 @@
 import 'package:cane_9_app/components/pageheaders.dart';
 import 'package:flutter/material.dart';
-import 'package:cane_9_app/components/combine_label_input.dart';
+import 'package:cane_9_app/components/edit_button.dart';
+import 'package:cane_9_app/components/label_input_combined.dart';
 import 'package:cane_9_app/services/firebase_image.dart';
 
 class EditPatientPage extends StatefulWidget {
@@ -36,10 +37,10 @@ class _EditPatientPageState extends State<EditPatientPage> {
   @override
   Widget build(BuildContext context) {
     return (Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Container(
-            color: const Color(0XFFF9E3DC),
+          child: SizedBox(
             child: Column(
               children: [
                 const PageHeaders(title: "Edit Elderly Personal Details"),
@@ -117,7 +118,7 @@ class _EditPatientPageState extends State<EditPatientPage> {
                             children: const [
                               SizedBox(
                                 width: 250,
-                                child: LableInput(
+                                child: LabelInputCombined(
                                   label: "Name",
                                   boxwidthhere: 143,
                                   boxheighthere: 21,
@@ -126,7 +127,7 @@ class _EditPatientPageState extends State<EditPatientPage> {
                               ),
                               SizedBox(
                                 width: 100,
-                                child: LableInput(
+                                child: LabelInputCombined(
                                   label: "Age",
                                   boxwidthhere: 40,
                                   boxheighthere: 21,
@@ -135,25 +136,25 @@ class _EditPatientPageState extends State<EditPatientPage> {
                               ),
                             ],
                           ),
-                          const LableInput(
+                          const LabelInputCombined(
                             label: "Address",
                             boxwidthhere: 231,
                             boxheighthere: 50,
                             howmanylineshere: 2,
                           ),
-                          const LableInput(
+                          const LabelInputCombined(
                             label: "Postal Code",
                             boxwidthhere: 143,
                             boxheighthere: 21,
                             howmanylineshere: 1,
                           ),
-                          const LableInput(
+                          const LabelInputCombined(
                             label: "Languages",
                             boxwidthhere: 143,
                             boxheighthere: 21,
                             howmanylineshere: 1,
                           ),
-                          const LableInput(
+                          const LabelInputCombined(
                             label: "Likes, Hobbies",
                             boxwidthhere: 143,
                             boxheighthere: 21,
