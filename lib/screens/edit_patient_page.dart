@@ -50,7 +50,7 @@ class _EditPatientPageState extends State<EditPatientPage> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: SizedBox(
-                    height: 650,
+                    height: 600,
                     width: double.infinity,
                     child: Card(
                       shape: RoundedRectangleBorder(
@@ -163,6 +163,44 @@ class _EditPatientPageState extends State<EditPatientPage> {
                             boxwidthhere: 143,
                             boxheighthere: 21,
                             howmanylineshere: 1,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 9, 0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 0, 9, 0),
+                                  child: CircleAvatar(
+                                    backgroundColor:
+                                        Theme.of(context).colorScheme.primary,
+                                    child: IconButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      icon: const Icon(
+                                        Icons.done,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                CircleAvatar(
+                                  backgroundColor:
+                                      const Color.fromRGBO(112, 112, 112, 1),
+                                  child: IconButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    icon: const Icon(
+                                      Icons.close,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
