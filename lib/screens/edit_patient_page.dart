@@ -59,49 +59,63 @@ class _EditPatientPageState extends State<EditPatientPage> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Row(
-                            children: [
-                              const Padding(
-                                padding: EdgeInsets.fromLTRB(18, 8, 0, 0),
-                                child: Text(
-                                  "Elderly Personal Details    ",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 12,
-                                    fontFamily: "Inter",
-                                    height: 1.25,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(0, 18, 0, 0),
+                                child: SizedBox(
+                                  width: 300,
+                                  child: Text(
+                                    "Please note that information saved here will be accessible to any passers-by who scans the QR code on the cane.",
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 5,
+                                    textAlign: TextAlign.justify,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 12,
+                                      fontFamily: "Inter",
+                                      height: 1.25,
+                                    ),
                                   ),
                                 ),
                               ),
-                              const Icon(
-                                Icons.info,
-                                size: 15,
-                              ),
-                              const Spacer(),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 8, 10, 0),
-                                child: EditButton(
-                                  onPressed: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (BuildContext context) {
-                                          return const EditPatientPage();
-                                        },
-                                      ),
-                                    );
-                                  },
-                                ),
-                              )
                             ],
                           ),
-                          Container(
-                            margin: const EdgeInsets.fromLTRB(0, 18, 0, 0),
-                            child: CircleAvatar(
-                              backgroundImage: patientimage.imageurl == ""
-                                  ? const AssetImage('assets/Patient_1.png')
-                                      as ImageProvider
-                                  : NetworkImage(patientimage.imageurl),
-                              radius: 113,
-                            ),
+                          Stack(
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.fromLTRB(0, 18, 0, 0),
+                                child: CircleAvatar(
+                                  backgroundImage: patientimage.imageurl == ""
+                                      ? const AssetImage('assets/Patient_1.png')
+                                          as ImageProvider
+                                      : NetworkImage(patientimage.imageurl),
+                                  radius: 86,
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 0,
+                                right: 12,
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      boxShadow: [
+                                        BoxShadow(
+                                            blurRadius: 4,
+                                            color:
+                                                Color.fromRGBO(0, 0, 0, 0.25),
+                                            spreadRadius: 4),
+                                      ]),
+                                  child: CircleAvatar(
+                                    radius: 17,
+                                    backgroundColor:
+                                        Theme.of(context).colorScheme.tertiary,
+                                    child: const Icon(Icons.add,
+                                        color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                           Row(
                             children: const [
