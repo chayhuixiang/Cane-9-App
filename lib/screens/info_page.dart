@@ -45,7 +45,7 @@ class _InfoPageState extends State<InfoPage> {
   }
 
   void fetchCareGiverInfo(Networking networking) async {
-    final caregiverinfo = await networking.fetchData();
+    final caregiverinfo = await networking.httpGet();
     if (caregiverinfo != null) {
       debugPrint("$caregiverinfo");
       CareGiverInfo cgi = CareGiverInfo(
