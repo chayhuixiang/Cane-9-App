@@ -93,8 +93,8 @@ class _AddLocationMapPageState extends State<AddLocationMapPage> {
         onMapCreated: _onMapCreated,
         initialCameraPosition: CameraPosition(
           target: LatLng(
-            latitude ?? 1.3485136904488333,
-            longitude ?? 103.68317761246088,
+            latitude ?? 1.3476701577007462,
+            longitude ?? 103.6821534386657,
           ),
           zoom: 14.0,
         ),
@@ -107,8 +107,8 @@ class _AddLocationMapPageState extends State<AddLocationMapPage> {
                 Marker(
                   markerId: const MarkerId("1"),
                   position: LatLng(
-                    latitude ?? 1.3485136904488333,
-                    longitude ?? 103.68317761246088,
+                    latitude ?? 1.3476701577007462,
+                    longitude ?? 103.6821534386657,
                   ),
                 ),
               },

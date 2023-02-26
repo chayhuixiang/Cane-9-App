@@ -263,11 +263,11 @@ class _MapPageState extends State<MapPage> {
             initialCameraPosition: CameraPosition(
               target: LatLng(
                 widget.lat == null
-                    ? 1.3485136904488333
+                    ? 1.3476701577007462
                     : double.parse(widget.lat!),
-                widget.lat == null
-                    ? 103.68317761246088
-                    : double.parse(widget.lat!),
+                widget.long == null
+                    ? 103.6821534386657
+                    : double.parse(widget.long!),
               ),
               zoom: 14.0,
             ),
@@ -279,15 +279,21 @@ class _MapPageState extends State<MapPage> {
                 markerId: const MarkerId("1"),
                 position: LatLng(
                   widget.lat == null
-                      ? 1.3485136904488333
+                      ? 1.3476701577007462
                       : double.parse(widget.lat!),
-                  widget.lat == null
-                      ? 103.68317761246088
-                      : double.parse(widget.lat!),
+                  widget.long == null
+                      ? 103.6821534386657
+                      : double.parse(widget.long!),
                 ),
               ),
             },
             circles: circles),
+        Positioned(
+          top: 0,
+          left: 150,
+          right: 150,
+          child: Image.asset("assets/CANE-9 Logo 1.png"),
+        ),
         Visibility(
           visible: widget.alerted,
           child: Positioned(
@@ -377,12 +383,6 @@ class _MapPageState extends State<MapPage> {
               ),
             ),
           ),
-        ),
-        Positioned(
-          top: 0,
-          left: 150,
-          right: 150,
-          child: Image.asset("assets/CANE-9 Logo 1.png"),
         ),
       ],
     );

@@ -50,15 +50,17 @@ class _AddLocationInfoPageState extends State<AddLocationInfoPage> {
     final payload = {
       "patientId": "iZJE99WIH4VQGzWptmDxpV3skpv1",
       "location": widget.placemark.street.toString(),
-      "postalCode": widget.placemark.postalCode.toString(),
+      "postalCode": widget.placemark.postalCode,
       "address": widget.placemark.street.toString(),
-      "lat": widget.latitude,
-      "long": widget.longitude,
+      "lat": widget.latitude.toString(),
+      "long": widget.longitude.toString(),
       "radius": _safezoneRadius,
       "image": imagePath,
       "frequencies": frequencies,
       "details": details,
     };
+
+    debugPrint("$payload");
 
     await networking.httpPost(payload);
     debugPrint("Successful Post");
